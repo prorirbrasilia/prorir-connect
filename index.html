@@ -152,32 +152,43 @@ function criarEstrelas() {
   }
 }
 
-async function liberarAudioNoIOS() {
+function liberarAudioNoIOS() {
   if (audioLiberado) return;
+  audioLiberado = true;
 
-  const audios = [audioCork, audioCelebration];
-
-  for (const audio of audios) {
+  [audioCork, audioCelebration].forEach(function(audio) {
     try {
       audio.muted = true;
+      audio.volume = 0;
       audio.currentTime = 0;
 
       const promessa = audio.play();
 
       if (promessa && typeof promessa.then === 'function') {
-        await promessa;
+        promessa
+          .then(function() {
+            audio.pause();
+            audio.currentTime = 0;
+            audio.muted = false;
+            audio.volume = 1;
+          })
+          .catch(function(erro) {
+            audio.muted = false;
+            audio.volume = 1;
+            console.log('Liberação de áudio indisponível:', erro);
+          });
+      } else {
+        audio.pause();
+        audio.currentTime = 0;
+        audio.muted = false;
+        audio.volume = 1;
       }
-
-      audio.pause();
-      audio.currentTime = 0;
-      audio.muted = false;
     } catch (erro) {
       audio.muted = false;
-      console.log('Não foi possível liberar o áudio:', erro);
+      audio.volume = 1;
+      console.log('Liberação de áudio indisponível:', erro);
     }
-  }
-
-  audioLiberado = true;
+  });
 }
 
 function tocarEstouro() {
@@ -438,21 +449,15 @@ async function celebrar(repeticao = false) {
   }, repeticao ? 3500 : 3600);
 }
 
-botaoAbrir.addEventListener(
-  'click',
-  async () => {
-    await liberarAudioNoIOS();
-    celebrar(false);
-  }
-);
+botaoAbrir.addEventListener('click', function() {
+  liberarAudioNoIOS();
+  celebrar(false);
+});
 
-botaoRepetir.addEventListener(
-  'click',
-  async () => {
-    await liberarAudioNoIOS();
-    celebrar(true);
-  }
-);
+botaoRepetir.addEventListener('click', function() {
+  liberarAudioNoIOS();
+  celebrar(true);
+});
 
 window.addEventListener(
   'resize',
