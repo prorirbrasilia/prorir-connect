@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#063b2a">
+<title>7 de Setembro — PróRir Brasília</title>
+<style>
+:root{--verde:#0a6b3b;--verde2:#0f8f51;--amarelo:#f6c900;--azul:#0c3d91;--escuro:#031a13;--branco:#fff}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;min-height:100%;font-family:Arial,Helvetica,sans-serif;color:#fff;background:radial-gradient(circle at 50% 30%,#0f6242 0%,#073526 48%,#02100c 100%);overflow:hidden}
+body{min-height:100svh}
+.bg{position:fixed;inset:0;overflow:hidden;z-index:0}
+.bg:before{content:"";position:absolute;inset:-12%;background:linear-gradient(135deg,rgba(255,255,255,.03),transparent 35%),linear-gradient(25deg,transparent 40%,rgba(246,201,0,.08) 41%,rgba(246,201,0,.08) 45%,transparent 46%),linear-gradient(-25deg,transparent 40%,rgba(12,61,145,.10) 41%,rgba(12,61,145,.10) 45%,transparent 46%);transform:rotate(-2deg) scale(1.05)}
+.flag{position:absolute;width:72vmax;height:46vmax;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-7deg);opacity:.18;filter:blur(.2px)}
+.flag .green{position:absolute;inset:0;border-radius:38px;background:#0a7b42;box-shadow:0 30px 90px rgba(0,0,0,.35)}
+.flag .diamond{position:absolute;left:50%;top:50%;width:62%;height:62%;background:#f6c900;transform:translate(-50%,-50%) rotate(45deg)}
+.flag .disc{position:absolute;left:50%;top:50%;width:30%;aspect-ratio:1;border-radius:50%;background:#0c3d91;transform:translate(-50%,-50%)}
+.glow{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle at 50% 50%,rgba(246,201,0,.10),transparent 34%)}
+.screen{position:fixed;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;padding:22px;transition:opacity .6s,visibility .6s}
+.screen.hide{opacity:0;visibility:hidden;pointer-events:none}
+.card{width:min(94vw,560px);padding:30px 26px 27px;text-align:center;border:1px solid rgba(255,255,255,.17);border-radius:30px;background:rgba(3,26,19,.88);box-shadow:0 28px 80px rgba(0,0,0,.46);backdrop-filter:blur(12px)}
+.brand{display:inline-flex;align-items:center;gap:10px;margin-bottom:19px;padding:8px 14px 8px 10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.13)}
+.brand-mark{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#36a8df,#0878b5);font-weight:900;font-size:20px}
+.brand-text{font-weight:800;letter-spacing:.02em;text-align:left;line-height:1.05}.brand-text small{display:block;margin-top:3px;color:#b8d9e7;font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.eyebrow{margin:0 0 8px;color:var(--amarelo);font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+h1{margin:0;font-size:clamp(38px,10vw,66px);line-height:.98;text-shadow:0 10px 28px rgba(0,0,0,.25)}
+.sub{margin:9px 0 0;color:#d7f1e2;font-size:15px;letter-spacing:.04em}
+.name{display:block;margin-top:22px;color:var(--amarelo);font-size:clamp(28px,8vw,44px);font-weight:900;line-height:1.08}
+.message{max-width:470px;margin:17px auto 0;color:#f5fbf8;font-size:clamp(16px,4.5vw,19px);line-height:1.62}
+.signature{margin:21px 0 0;color:#9fd6bc;font-size:14px;font-weight:800;line-height:1.45}
+.open{margin-top:24px;width:100%;padding:16px 22px;border:0;border-radius:999px;background:linear-gradient(135deg,var(--amarelo),#ffd83d);color:#17321f;font-size:17px;font-weight:900;cursor:pointer;box-shadow:0 14px 35px rgba(246,201,0,.22)}
+.open:active{transform:scale(.98)}
+.note{margin:12px 0 0;color:rgba(255,255,255,.5);font-size:11px}
+.final{position:fixed;left:50%;top:50%;z-index:7;width:min(94vw,620px);padding:30px 27px 28px;text-align:center;border:1px solid rgba(255,255,255,.18);border-radius:32px;background:rgba(3,26,19,.91);box-shadow:0 30px 90px rgba(0,0,0,.5);backdrop-filter:blur(14px);opacity:0;visibility:hidden;transform:translate(-50%,-44%) scale(.86);transition:opacity .7s,visibility .7s,transform .7s cubic-bezier(.2,.85,.25,1.12)}
+.final.show{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+.ring{width:92px;height:92px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#123c91 0 44%,#f6c900 45% 66%,#0a7b42 67%);box-shadow:0 0 0 10px rgba(255,255,255,.04),0 15px 40px rgba(0,0,0,.28)}
+.ring span{font-size:33px}
+.final h2{margin:0;color:var(--amarelo);font-size:clamp(32px,9vw,54px);line-height:1.04}
+.final .date{margin:8px 0 18px;color:#c9ebda;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:.14em}
+.final .message{margin-top:0}
+.replay{margin-top:22px;padding:11px 18px;border:1px solid rgba(255,255,255,.22);border-radius:999px;background:rgba(255,255,255,.06);color:#fff;font-weight:800;cursor:pointer}
+.confetti{position:fixed;z-index:6;width:9px;height:16px;top:-30px;opacity:.95;animation:fall linear forwards}
+@keyframes fall{to{transform:translate3d(var(--x),110vh,0) rotate(900deg);opacity:.9}}
+.star{position:fixed;z-index:2;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.4;animation:tw 2.4s infinite ease-in-out}
+@keyframes tw{50%{opacity:1;transform:scale(1.5)}}
+@media (max-height:720px){.card,.final{padding-top:21px;padding-bottom:21px}.name{margin-top:15px}.message{font-size:15px;line-height:1.5}.ring{width:76px;height:76px}}
+</style>
+</head>
+<body>
+<div class="bg"><div class="flag"><div class="green"></div><div class="diamond"></div><div class="disc"></div></div></div><div class="glow"></div>
+<section id="screen" class="screen">
+  <div class="card">
+    <div class="brand"><div class="brand-mark">P</div><div class="brand-text">PróRir Brasília<small>Connect Feriados</small></div></div>
+    <p class="eyebrow">Uma mensagem especial para você</p>
+    <h1>7 de Setembro</h1>
+    <p class="sub">Independência do Brasil</p>
+    <span id="name1" class="name">Olá!</span>
+    <p class="message">Preparamos uma mensagem especial para celebrar esta data.</p>
+    <button id="open" class="open">Abrir cartão 🇧🇷</button>
+    <p class="note">Toque para abrir</p>
+  </div>
+</section>
+<section id="final" class="final">
+  <div class="ring"><span>🇧🇷</span></div>
+  <p class="eyebrow">Independência do Brasil</p>
+  <h2 id="name2">Olá!</h2>
+  <p class="date">7 de Setembro</p>
+  <p class="message">Neste 7 de Setembro, celebramos a Independência do Brasil. Que esta data nos lembre da importância da liberdade, da responsabilidade e do respeito, e do papel de cada cidadão na construção do futuro do nosso país. Desejamos a você e à sua família um excelente feriado! 🇧🇷</p>
+  <p class="signature">Com carinho,<br>Equipe PróRir Brasília</p>
+  <button id="replay" class="replay">Ver novamente</button>
+</section>
+<script>
+const qs=new URLSearchParams(location.search);
+const raw=(qs.get('nome')||qs.get('name')||'').trim();
+const first=raw?raw.split(/\s+/)[0]:'';
+const display=first?first+',':'Olá!';
+document.getElementById('name1').textContent=display;
+document.getElementById('name2').textContent=display;
+for(let i=0;i<35;i++){const s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*100+'vh';s.style.animationDelay=(Math.random()*2.4)+'s';document.body.appendChild(s)}
+function burst(){const colors=['#0a7b42','#f6c900','#0c3d91','#ffffff'];for(let i=0;i<90;i++){const c=document.createElement('i');c.className='confetti';c.style.left=(48+Math.random()*4)+'vw';c.style.background=colors[i%colors.length];c.style.setProperty('--x',((Math.random()-.5)*95)+'vw');c.style.animationDuration=(2.6+Math.random()*2.1)+'s';c.style.animationDelay=(Math.random()*.35)+'s';c.style.transform='rotate('+Math.random()*180+'deg)';document.body.appendChild(c);setTimeout(()=>c.remove(),5200)}}
+const screen=document.getElementById('screen'),final=document.getElementById('final');
+document.getElementById('open').onclick=()=>{screen.classList.add('hide');setTimeout(()=>{final.classList.add('show');burst()},280)};
+document.getElementById('replay').onclick=()=>{final.classList.remove('show');setTimeout(()=>screen.classList.remove('hide'),300)};
+</script>
+</body>
+</html>
